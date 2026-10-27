@@ -1,0 +1,5 @@
+# Copy to .dev.vars for local configuration. Never commit real credentials.
+# Authentication is restricted to the exact HTTPS production origin.
+SITE_URL=https://camliesj-person.pages.dev
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=

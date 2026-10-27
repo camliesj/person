@@ -1,0 +1,20 @@
+{
+  "title": "日常之间",
+  "name": "camliesj",
+  "description": "一个收藏作品与日常的个人空间。记录创作、分享生活，让每一份热爱都有地方安放。",
+  "heroTitle": "把热爱，\n留在日常里。",
+  "intro": "这里收集作品，也记录生活。把想做的事、偶然的灵感，和那些值得停留的片刻，慢慢整理成自己的样子。",
+  "heroImage": "/uploads/quiet-desk.webp",
+  "heroImageAlt": "阳光落在木桌、笔记本与陶土花瓶上，AI 生成的示例配图",
+  "heroCaption": "一个安静的日常切片 · 示例配图",
+  "aboutTitle": "认真做事，\n也认真感受生活。",
+  "aboutText": "欢迎来到我的小小空间。这里将用来分享我的作品、学习过程与生活观察。关于我的更多介绍，正在慢慢补全。",
+  "bio": "这是一段待完善的自我介绍。可以在内容后台写下你正在做什么、关心什么，以及想通过这个网站分享的故事。",
+  "portrait": "/uploads/portrait-placeholder.svg",
+  "portraitAlt": "个人照片待添加",
+  "interests": ["创作与探索", "日常观察", "持续学习"],
+  "timeline": [],
+  "email": "",
+  "socials": [{ "label": "GitHub", "url": "https://github.com/camliesj" }],
+  "demoNotice": true
+}

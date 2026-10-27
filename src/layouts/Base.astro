@@ -1,0 +1,40 @@
+---
+import '../styles/global.css';
+import { site } from '../lib/site';
+import Icon from '../components/Icon.astro';
+interface Props { title?: string; description?: string; image?: string; noindex?: boolean; article?: boolean }
+const { title, description = site.description, image = site.heroImage, noindex = false, article = false } = Astro.props;
+const pageTitle = title ? `${title} — ${site.title}` : `${site.title} — ${site.name} 的个人空间`;
+const canonical = Astro.site && Astro.site.hostname !== 'localhost' ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const nav = [{ href: '/', label: '首页' }, { href: '/works/', label: '作品' }, { href: '/notes/', label: '记录' }, { href: '/about/', label: '关于' }];
+const active = (href: string) => href === '/' ? Astro.url.pathname === '/' : Astro.url.pathname.startsWith(href);
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title><meta name="description" content={description} /><meta name="theme-color" content="#f6f3ec" />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={pageTitle} /><meta property="og:description" content={description} />
+    <meta property="og:type" content={article ? 'article' : 'website'} /><meta property="og:locale" content="zh_CN" />
+    {canonical && <><meta property="og:url" content={canonical} /><meta property="og:image" content={new URL(image, Astro.site).href} /></>}
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles/reading.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="site-header wrap">
+      <a class="brand" href="/" aria-label={`${site.title}，返回首页`}><span class="brand-mark"><Icon name="sun" size={28} /></span><span>{site.title}<small>A PERSONAL JOURNAL</small></span></a>
+      <nav aria-label="主导航">{nav.map((item) => <a href={item.href} class:list={{ active: active(item.href) }} aria-current={active(item.href) ? 'page' : undefined}>{item.label}</a>)}</nav>
+      <span class="header-note"><span class="status-dot"></span>慢慢来，也很好</span>
+    </header>
+    <main id="main" tabindex="-1"><slot /></main>
+    <footer class="site-footer wrap">
+      <div class="footer-top"><a class="footer-title" href="/">{site.title}<span>在创作与生活之间，留下自己的印记。</span></a><a class="back-top" href="#main">回到顶部 ↑</a></div>
+      <div class="footer-bottom"><span>© {new Date().getFullYear()} {site.name} <span class="footer-divider">/</span> 用心记录，缓慢生长。</span><div>{site.socials.map((link) => <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}<a href="/admin/">内容管理 ↗</a></div></div>
+      {site.demoNotice && <p class="demo-notice">当前为个人空间初稿。标注“示例”的作品、文字与配图用于展示，可在后台替换。</p>}
+    </footer>
+  </body>
+</html>

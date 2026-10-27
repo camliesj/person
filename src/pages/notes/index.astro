@@ -1,0 +1,7 @@
+---
+import Base from '../../layouts/Base.astro';
+import NoteRow from '../../components/NoteRow.astro';
+import { getNotes } from '../../lib/content';
+const notes = await getNotes();
+---
+<Base title="记录" description="关于创作、观察和生活的日常记录。"><div class="wrap page-body"><header class="page-heading"><p class="eyebrow section-kicker">NOTES ALONG THE WAY</p><h1>把片刻，<span class="accent">写成回声。</span></h1><p>一些想法，一些观察。给匆忙的日子留一点空白，也给未来的自己留一封信。</p></header><div class="notes-list">{notes.map((entry) => <NoteRow entry={entry} />)}</div>{notes.length === 0 && <p class="empty-state">第一篇记录，正在路上。</p>}</div></Base>

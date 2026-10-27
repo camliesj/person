@@ -1,0 +1,7 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "camliesj-person",
+  // Local development only: production bindings are configured in the Pages dashboard.
+  // Deliberately omit pages_build_output_dir so this file does not replace them.
+  "compatibility_date": "2026-10-27"
+}

@@ -1,0 +1,13 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/collection-utils';
+import Icon from './Icon.astro';
+interface Props { entry: CollectionEntry<'notes'> }
+const { entry } = Astro.props;
+---
+<article class="note-row">
+  <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
+  <div class="note-main"><span class="eyebrow">{entry.data.category}{entry.data.sample && ' · 示例记录'}</span><h3><a href={`/notes/${entry.data.slug}/`}>{entry.data.title}</a></h3><p>{entry.data.summary}</p></div>
+  <a class="note-thumb" href={`/notes/${entry.data.slug}/`} tabindex="-1" aria-hidden="true"><img src={entry.data.cover} alt="" width="240" height="180" loading="lazy" /></a>
+  <span class="note-arrow"><Icon name="external" /></span>
+</article>

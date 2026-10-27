@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getProjects } from '../../lib/content';
+const projects = await getProjects();
+const categories = [...new Set(projects.map((entry) => entry.data.category))];
+---
+<Base title="作品" description="一些创作，一些尝试。浏览设计、影像与日常探索中的作品。">
+  <div class="wrap page-body"><header class="page-heading"><p class="eyebrow section-kicker">THE THINGS I MAKE</p><h1>让想法，<span class="accent">慢慢有形。</span></h1><p>把好奇变成尝试，把尝试留成作品。这里记录创作的过程，也保留不完美的开始。</p></header>
+  <div class="filter-bar" role="group" aria-label="按作品分类筛选"><button class="filter active" type="button" data-filter="all" aria-pressed="true">全部作品 <span>{projects.length}</span></button>{categories.map((category) => <button class="filter" type="button" data-filter={category} aria-pressed="false">{category}</button>)}</div>
+  <p class="sr-only" role="status" id="filter-status" aria-live="polite"></p>
+  <div class="project-grid all-projects">{projects.map((entry, index) => <ProjectCard entry={entry} index={index} />)}</div>
+  {projects.length === 0 && <p class="empty-state">作品正在整理中，欢迎稍后再来。</p>}
+  </div>
+</Base>
+<script>
+  const filters = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-category]');
+  filters.forEach((button) => button.addEventListener('click', () => {
+    filters.forEach((item) => { const selected = item === button; item.classList.toggle('active', selected); item.setAttribute('aria-pressed', String(selected)); });
+    let count = 0;
+    cards.forEach((card) => { card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter; if (!card.hidden) count++; });
+    const status = document.getElementById('filter-status'); if (status) status.textContent = `显示 ${count} 件作品`;
+  }));
+</script>

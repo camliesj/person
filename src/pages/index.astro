@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import NoteRow from '../components/NoteRow.astro';
+import { site } from '../lib/site';
+import { getProjects, getNotes } from '../lib/content';
+import { featured } from '../lib/collection-utils';
+const projects = featured(await getProjects()).slice(0, 2);
+const notes = (await getNotes()).slice(0, 3);
+---
+<Base>
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow hello"><span class="tiny-line"></span>你好，我是 {site.name} <span class="hello-sun">✳</span></p>
+      <h1 id="hero-title">{site.heroTitle.split('\n').map((line, i) => <span class:list={{ accent: i === 1 }}>{line}</span>)}</h1>
+      <p class="hero-intro">{site.intro}</p>
+      <div class="hero-actions"><a class="button" href="/works/">看看我的作品 <Icon name="arrow" size={18} /></a><a class="text-link" href="/about/">关于我的一些事 <Icon name="external" size={17} /></a></div>
+      <p class="hero-footnote"><Icon name="leaf" size={17} /> 保持好奇，保持热爱。</p>
+    </div>
+    <figure class="hero-photo"><div class="photo-frame"><img src={site.heroImage} alt={site.heroImageAlt} width="1200" height="900" fetchpriority="high" /><span class="photo-label">LITTLE THINGS,<br />MEAN A LOT.</span><span class="photo-stamp"><Icon name="sun" size={29} /> 日常收藏</span></div><figcaption><span>{site.heroCaption}</span><span>01 / DAILY LIFE</span></figcaption></figure>
+  </section>
+  <div class="chapter-line wrap"><span>一些创作，一些生活，一些正在发生的事。</span><span>SCROLL TO EXPLORE <span aria-hidden="true">↓</span></span></div>
+  <section class="section wrap" aria-labelledby="works-heading">
+    <div class="section-heading"><div><p class="eyebrow section-kicker">01 / SELECTED WORKS</p><h2 id="works-heading">做过的，<span class="serif-soft">与正在做的。</span></h2></div><a class="text-link" href="/works/">全部作品 <Icon name="arrow" size={18} /></a></div>
+    <div class="project-grid">{projects.map((entry, index) => <ProjectCard entry={entry} index={index} />)}</div>
+    {projects.length === 0 && <p class="empty-state">作品正在整理中，欢迎过些时候再来看看。</p>}
+  </section>
+  <section class="notes-section section wrap" aria-labelledby="notes-heading">
+    <div class="section-heading"><div><p class="eyebrow section-kicker">02 / FIELD NOTES</p><h2 id="notes-heading">日常里的<span class="serif-soft">小回声。</span></h2></div><a class="text-link" href="/notes/">所有记录 <Icon name="arrow" size={18} /></a></div>
+    <div class="notes-list">{notes.map((entry) => <NoteRow entry={entry} />)}</div>
+    {notes.length === 0 && <p class="empty-state">留一页空白，等待下一段故事。</p>}
+  </section>
+  <section class="about-strip wrap" aria-labelledby="about-heading"><div class="about-illustration" aria-hidden="true"><Icon name="leaf" size={72} /><span>GROW AT YOUR<br />OWN PACE.</span></div><div><p class="eyebrow">A LITTLE ABOUT ME</p><h2 id="about-heading">{site.aboutTitle.replace('\n', '')}</h2><p>{site.aboutText}</p></div><a class="round-link" href="/about/" aria-label="进一步了解我"><Icon name="external" size={26} /></a></section>
+  <section class="contact-section wrap"><p class="eyebrow">LET'S KEEP IN TOUCH</p><h2>很高兴，<span class="serif-soft">在这里遇见你。</span></h2><p>如果你也对这些事感兴趣，欢迎来打个招呼。</p>{site.email ? <a class="text-link" href={`mailto:${site.email}`}>给我写封信 <Icon name="mail" /></a> : <a class="text-link" href="/about/#contact">找到我 <Icon name="arrow" /></a>}</section>
+</Base>

@@ -1,0 +1,18 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+interface Props { entry: CollectionEntry<'projects'>; index?: number }
+const { entry, index = 0 } = Astro.props;
+const { data } = entry;
+---
+<article class="project-card" data-category={data.category}>
+  <a class="project-cover" href={`/works/${data.slug}/`} tabindex="-1" aria-hidden="true">
+    <img src={data.cover} alt="" width="960" height="640" loading="lazy" decoding="async" />
+    <span class="cover-index">{String(index + 1).padStart(2, '0')}</span>
+    {data.sample && <span class="sample-badge">示例作品</span>}
+    <span class="cover-arrow"><Icon name="external" /></span>
+  </a>
+  <div class="project-meta"><span>{data.category}</span><span>{data.date.getFullYear()}</span></div>
+  <h3><a href={`/works/${data.slug}/`}>{data.title}<Icon name="external" size={20} /></a></h3>
+  <p>{data.summary}</p>
+</article>
