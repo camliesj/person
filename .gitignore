@@ -1,0 +1,22 @@
+# Dependencies and generated website output
+node_modules/
+dist/
+build/
+.next/
+out/
+.nuxt/
+.output/
+.cache/
+coverage/
+
+# Local configuration; keep example environment files shareable
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Logs and operating-system files
+*.log
+.DS_Store
+Thumbs.db
+Desktop.ini
